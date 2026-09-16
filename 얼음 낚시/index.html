@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>얼음 낚시 - 프로토타입</title>
+<style>
+  html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    background: #0b0f14;
+    overflow: hidden;
+  }
+  #stage {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 480px;
+    height: 853px;
+    max-width: 100vw;
+    max-height: 100vh;
+    background: #cfe9f7;
+    box-shadow: 0 0 40px rgba(0,0,0,0.6);
+  }
+  #stage canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+  #hint {
+    position: absolute;
+    top: 82px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    color: #234;
+    font-family: sans-serif;
+    font-size: 14px;
+    pointer-events: none;
+    text-shadow: 0 1px 2px rgba(255,255,255,0.6);
+  }
+  #money {
+    position: absolute;
+    top: 10px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    color: #1a3a1a;
+    font-family: sans-serif;
+    font-weight: bold;
+    font-size: 20px;
+    pointer-events: none;
+    text-shadow: 0 1px 2px rgba(255,255,255,0.8);
+  }
+  #catch {
+    position: absolute;
+    top: 38px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    color: #14324a;
+    font-family: sans-serif;
+    font-size: 14px;
+    pointer-events: none;
+    text-shadow: 0 1px 2px rgba(255,255,255,0.8);
+  }
+  .overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(10, 20, 30, 0.88);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-family: sans-serif;
+    text-align: center;
+    z-index: 50;
+  }
+  .overlay h1 { font-size: 28px; margin: 0 0 10px; }
+  .overlay p { font-size: 16px; margin: 6px 0; color: #dfefff; }
+  .overlay button {
+    margin-top: 24px;
+    padding: 14px 36px;
+    font-size: 18px;
+    font-weight: bold;
+    border: none;
+    border-radius: 999px;
+    background: #ffcc33;
+    color: #221a00;
+    cursor: pointer;
+  }
+  .overlay button:active { background: #e0b41f; }
+  #ending-overlay { display: none; }
+</style>
+</head>
+<body>
+<div id="stage">
+  <div id="money">자금: $0</div>
+  <div id="catch">등짐 0/3 · 오븐대기 0 · 슬라이서대기 0</div>
+  <div id="hint">물고기를 잡아 오븐→슬라이서→서빙 순서로 직접 날라 판매하세요 (컨베이어 발판을 사면 자동화됩니다)</div>
+
+  <div id="start-overlay" class="overlay">
+    <h1>얼음 낚시</h1>
+    <p>물고기를 잡아 가공해서 손님에게 팔아보세요.</p>
+    <p>자금을 모아 업그레이드를 사고, 마지막엔 $3000짜리 엔딩 발판으로 게임을 마무리할 수 있어요.</p>
+    <button id="start-btn">게임 시작</button>
+  </div>
+
+  <div id="ending-overlay" class="overlay">
+    <h1>수고하셨습니다!</h1>
+    <p id="ending-time">플레이 시간: 0분 0초</p>
+    <p id="ending-money">누적 수익: $0</p>
+    <button id="restart-btn">다시 게임하기</button>
+  </div>
+</div>
+
+<script src="https://unpkg.com/three@0.158.0/build/three.min.js"></script>
+<script src="game.js"></script>
+</body>
+</html>
